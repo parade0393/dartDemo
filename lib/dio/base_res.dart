@@ -2,7 +2,7 @@ class BaseResponse {
   late dynamic data;
   late int errorCode;
 
-  late String errorMsg;
+   String? errorMsg;
 
   BaseResponse({
     required this.data,
