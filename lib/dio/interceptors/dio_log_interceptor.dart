@@ -49,9 +49,9 @@ class DioLogInterceptor extends Interceptor {
       requestHeaders.addAll(options.headers);
       requestHeaders['contentType'] = options.contentType?.toString();
       requestHeaders['responseType'] = options.responseType.toString();
-      requestHeaders['followRedirects'] = options.followRedirects;
-      requestHeaders['connectTimeout'] = options.connectTimeout?.toString();
-      requestHeaders['receiveTimeout'] = options.receiveTimeout?.toString();
+      // requestHeaders['followRedirects'] = options.followRedirects;
+      // requestHeaders['connectTimeout'] = options.connectTimeout?.toString();
+      // requestHeaders['receiveTimeout'] = options.receiveTimeout?.toString();
       _printMapAsTable(requestHeaders, header: headers_tag);
       _printMapAsTable(options.extra, header: 'Extras');
 
