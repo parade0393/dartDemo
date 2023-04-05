@@ -1,8 +1,8 @@
+
 class BaseResponse {
   late dynamic data;
   late int errorCode;
-
-   String? errorMsg;
+  String? errorMsg;
 
   BaseResponse({
     required this.data,
@@ -14,6 +14,6 @@ class BaseResponse {
     if(json == null) return;
       data = json["data"];
       errorCode = json["errorCode"];
-      errorMsg = json["errorCode"]?? "";
+      errorMsg = json["errorMsg"]?? "";
   }
 }

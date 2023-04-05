@@ -1,11 +1,10 @@
-import 'package:dartDemo/dio/base_res.dart';
+import 'package:dartDemo/dio/response/base_res.dart';
 import 'package:dio/dio.dart';
 
-class ApiException implements Exception{
-
+class ApiException implements Exception {
   static const unknownException = "未知错误";
-   final String? message;
-   final int? code;
+  final String? message;
+  final int? code;
   String? stackInfo;
 
   ApiException([this.code, this.message]);
@@ -23,7 +22,8 @@ class ApiException implements Exception{
       case DioErrorType.badResponse:
         try {
           /// http错误码带业务错误信息
-          BaseResponse apiResponse = BaseResponse.fromJson(error.response?.data);
+          BaseResponse apiResponse =
+              BaseResponse.fromJson(error.response?.data);
           if (apiResponse.errorMsg != null) {
             return ApiException(apiResponse.errorCode, apiResponse.errorMsg);
           }
@@ -60,7 +60,7 @@ class ApiException implements Exception{
     }
   }
 
-  factory ApiException.from(dynamic exception){
+  factory ApiException.from(dynamic exception) {
     if (exception is DioError) {
       return ApiException.fromDioError(exception);
     }
@@ -71,6 +71,11 @@ class ApiException implements Exception{
       apiException.stackInfo = exception?.toString();
       return apiException;
     }
+  }
+
+  @override
+  String toString() {
+    return "code:$code,message:$message";
   }
 }
 
