@@ -65,6 +65,7 @@ class ApiException implements Exception {
       return ApiException.fromDioError(exception);
     }
     if (exception is ApiException) {
+      print("error:${exception.message}");
       return exception;
     } else {
       var apiException = ApiException(-1, unknownException);

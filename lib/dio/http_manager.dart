@@ -55,7 +55,7 @@ class HttpManager {
     required String method,
     Map<String, dynamic>? queryParameters,
     dynamic data,
-    Map<String, dynamic>? headers,
+    Options? requestOptions,
     bool Function(ApiException)? onError,
   }) async {
     try {
@@ -63,8 +63,26 @@ class HttpManager {
         throw ApiException(-1,"Please call the init method first");
       }
       Options options = Options()
-        ..method = method
-        ..headers = headers;
+        ..method = method;
+      if(requestOptions != null){
+       options.copyWith(
+         sendTimeout: requestOptions.sendTimeout,
+         receiveTimeout: requestOptions.receiveTimeout,
+         extra: requestOptions.extra,
+         responseType: requestOptions.responseType,
+         contentType: requestOptions.contentType,
+         validateStatus: requestOptions.validateStatus,
+         receiveDataWhenStatusError: requestOptions.receiveDataWhenStatusError,
+         followRedirects: requestOptions.followRedirects,
+         maxRedirects: requestOptions.maxRedirects,
+         persistentConnection: requestOptions.persistentConnection,
+         requestEncoder: requestOptions.requestEncoder,
+         responseDecoder: requestOptions.responseDecoder,
+         listFormat: requestOptions.listFormat,
+         headers: requestOptions.headers
+       );
+
+      }
       data = _convertRequestData(data);
       Response response = await _dio.request(
         url,
@@ -90,9 +108,10 @@ class HttpManager {
     Map<String, dynamic>? queryParameters,
     dynamic data,
     Map<String, dynamic>? headers,
+    Options? options,
     bool Function(ApiException)? onError,
   }){
-    return request(url: url, method: "get",queryParameters: queryParameters,data: data,onError: onError);
+    return request(url: url, method: "get",queryParameters: queryParameters,data: data,onError: onError,requestOptions: options);
   }
 
   ///将请求 data 数据先使用 jsonEncode 转换为字符串，再使用 jsonDecode 方法将字符串转换为 Map。
